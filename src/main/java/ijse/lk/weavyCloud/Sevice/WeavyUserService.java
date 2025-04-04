@@ -22,4 +22,41 @@ public class WeavyUserService {
         }
     }
 
+    public String updateUser(String userId, String userJson) throws Exception {
+        String url = BASE_URL + "/users/" + userId;  // Assuming userId is part of the URL
+
+        RequestBody body = RequestBody.create(userJson, MediaType.get("application/json"));
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + BEARER_TOKEN)
+                .put(body)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                return response.body().string();  // Success: return the response body
+            } else {
+                throw new Exception("Failed to update user: " + response.message());
+            }
+        }
+    }
+
+    public String deleteUser(String userId) throws Exception {
+        String url = BASE_URL + "/users/" + userId;  // Assuming userId is part of the URL
+
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + BEARER_TOKEN)
+                .delete()
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                return "User deleted successfully";  // Success: return a confirmation message
+            } else {
+                throw new Exception("Failed to delete user: " + response.message());
+            }
+        }
+    }
+
 }
