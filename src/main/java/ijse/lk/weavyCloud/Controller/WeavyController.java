@@ -15,4 +15,14 @@ public class WeavyController {
     public String createUser(@RequestBody String userJson) throws Exception {
         return userService.createUser(userJson);
     }
+    @PutMapping("/{userId}")
+    public String updateUser(@PathVariable String userId, @RequestBody String userJson) throws Exception {
+        return userService.updateUser(userId, userJson);
+    }
+
+    // Endpoint to delete a user
+    @DeleteMapping("/{userId}")
+    public String deleteUser(@PathVariable String userId) throws Exception {
+        return userService.deleteUser(userId);
+    }
 }
